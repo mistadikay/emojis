@@ -83,12 +83,6 @@ ul {
     position: relative;
     border-bottom: 1px solid rgba(0,0,0,.1);
     padding: 10px 0 7px 0; }
-  #description {
-    width: 85%;
-    margin: 12px 0 0 0;
-    border-top: 1px solid #fff;
-    font-weight: 300; }
-  #description a { font-weight: bold; }
   #footer {
     padding: 8px 20px;
     background: rgba(200,200,200,.2);
@@ -138,7 +132,6 @@ ul {
   .search {
     position: relative;
     top: 0; }
-  #description { width: 100%; }
 }
 
 #flash-test {
@@ -147,10 +140,3 @@ ul {
   left: 0;
   width: 1px;
   height: 1px; }
-
-#campfire-sounds > li > a {
-  text-decoration: none;
-  font-size: 12px; }
-
-#campfire-sounds > li > div {
-  display: inline-block; }

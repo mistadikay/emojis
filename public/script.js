@@ -127,51 +127,18 @@ $(document).ready(function() {
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(po, s);
 
-  var curAudio;
-  var curAudioContainer;
-
-  function play(e) {
-    e.preventDefault();
-
-    if (curAudio) {
-      curAudio.pause();
-      playStopped();
+  $.ajax({
+    url: 'https://api.github.com/emojis'
+  }).done(function(emojis) {
+    if (!emojis || typeof emojis !== 'object' || 'length' in emojis) {
+      return $("#emojis").html('Unexpected response from Github');
     }
 
-    if ($(curAudioContainer).is(this)) {
-      curAudioContainer = null;
-    } else {
-      curAudioContainer = this;
-      soundContainer = $(curAudioContainer).find("~ div").first();
-      soundName = $(soundContainer).data("sound");
+    var $emojis = Object.keys(emojis).map(function(name) {
+      return '<li><div><img src="' + emojis[name] + '">:<span class="name" data-alternative-name="' + name + '">' + name + '</span>:</div></li>\n';
+    });
 
-      $(curAudioContainer).html('&#x275A;&#x275A; ');
-
-      curAudio = new Audio("https://emoji-cheat-sheet.campfirenow.com/sounds/" + soundName + ".mp3");
-      $(curAudio).on('ended', playStopped);
-      curAudio.play();
-    }
-  }
-
-  function playStopped() {
-    $(curAudioContainer).html('&#9658; ');
-  }
-
-  function canPlayMp3() {
-    var audio = new Audio(),
-      result = audio.canPlayType("audio/mpeg");
-
-    if(result != "") {
-      return true;
-    }
-  }
-
-  if (canPlayMp3() == true) {
-    $("#campfire-sounds li").prepend('<a href="#" class="play">&#9658; </a>');
-    $("#campfire-sounds .play").on("click", play);
-  }
-
-  $("#description a").on("click", function() {
-    _gaq.push(["_trackEvent", "Services", "Click", $(this).text()]);
+    $("#emojis").html($emojis)
+    //
   });
 });
