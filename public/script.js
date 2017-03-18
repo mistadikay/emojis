@@ -127,18 +127,19 @@ $(document).ready(function() {
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(po, s);
 
-  $.ajax({
-    url: 'https://api.github.com/emojis'
-  }).done(function(emojis) {
-    if (!emojis || typeof emojis !== 'object' || 'length' in emojis) {
-      return $("#emojis").html('Unexpected response from Github');
-    }
+  $.ajax({ url: 'https://api.github.com/emojis' })
+    .done(function(emojis) {
+      if (!emojis || typeof emojis !== 'object' || 'length' in emojis) {
+        return $("#emojis").html('Unexpected response from Github');
+      }
 
-    var $emojis = Object.keys(emojis).map(function(name) {
-      return '<li><div><img src="' + emojis[name] + '">:<span class="name" data-alternative-name="' + name + '">' + name + '</span>:</div></li>\n';
+      var $emojis = Object.keys(emojis).map(function(name) {
+        return '<li><div><img src="' + emojis[name] + '">:<span class="name" data-alternative-name="' + name + '">' + name + '</span>:</div></li>\n';
+      });
+
+      $("#emojis").html($emojis)
+    })
+    .fail(function(error) {
+      $("#emojis").html('Error: <pre>' + error.responseText + '</pre>');
     });
-
-    $("#emojis").html($emojis)
-    //
-  });
 });
