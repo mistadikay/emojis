@@ -39,7 +39,7 @@ $(document).ready(function() {
           $(highlightedElement).removeClass('copied');
         },800);
 
-        _gaq.push(['_trackEvent', 'Emojis', 'Copy', text]);
+        ga('send', 'event', 'Emojis', 'Copy', text);
       });
     });
 
@@ -64,7 +64,7 @@ $(document).ready(function() {
           var highlightedElement = $(this);
           if(document.execCommand('copy')==true) { // this will silently fail on IE11 when access is denied
             $(highlightedElement).addClass('copied');
-            _gaq.push(['_trackEvent', 'Emojis', 'Copy', $(this).text().trim()]);
+            ga('send', 'event', 'Emojis', 'Copy', $(this).text().trim());
             setTimeout(function(){
               $(highlightedElement).removeClass('copied');
             },800);
